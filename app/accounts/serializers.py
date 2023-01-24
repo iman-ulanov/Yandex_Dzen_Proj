@@ -14,8 +14,11 @@ class AuthorRegisterSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         if data['password'] != data['password_2']:
-            raise serializers.ValidationError('Пароли должны совпадать!')
+            raise serializers.ValidationError('Введите пароль правильно')
+        if len(data['password']) < 8:
+            raise serializers.ValidationError('Пароль не может быть меньше 8 символов')
         return data
+
 
     def create(self, validated_data):
         user = User(username=validated_data['username'])
@@ -25,4 +28,13 @@ class AuthorRegisterSerializer(serializers.ModelSerializer):
                                        email=validated_data['email'],
                                        user=user)
         return author
+
+    def validate_username(self, username):
+        exceptions = '@#$%*()}"{:?><~`,./;[]-=/*+'
+        if len(username) < 8:
+            raise serializers.ValidationError('Имя пользователя должно быть не менее 8 символов')
+        for i in exceptions:
+            if i in username:
+                raise serializers.ValidationError('Введены запрещенные символы!')
+        return username
 

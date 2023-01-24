@@ -5,8 +5,8 @@ User = get_user_model()
 
 
 class Author(models.Model):
-    telegram_chat_id = models.CharField(max_length=100)
-    email = models.EmailField()
+    telegram_chat_id = models.CharField(max_length=100, unique=True)
+    email = models.EmailField(unique=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def __str__(self):

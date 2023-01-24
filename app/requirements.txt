@@ -1,0 +1,9 @@
+django==3.2
+djangorestframework
+pyTelegramBotAPI
+drf-yasg
+django-filter
+drf-yasg
+psycopg2-binary
+django-cors-headers
+gunicorn
